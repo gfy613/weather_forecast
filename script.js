@@ -43,15 +43,15 @@ function citySearchPopulate(city){
 		console.log(K);
 		var F = ((K - 273.15) * 1.8 + 32).toFixed(0);
 		console.log(F);
-        $("#temp").append("Temperature: "+F + " °F");
+        $("#temp").append(+F + "°F");
         
         // Humidity 
         var humidity = response.main.humidity;
-        $("#humidity").append("Humiditity: "+humidity + "%");
+        $("#humidity").append(+humidity + "%");
         
         // Windspeed
         var windSpeed = response.wind.speed
-        $("#windSpeed").append("Wind speed: "+windSpeed + "MPH"); 
+        $("#windSpeed").append(+windSpeed + " MPH"); 
 
 
         var lon = response.coord.lon;
@@ -139,7 +139,7 @@ function fiveDay(city) {
         var fiveFront = "https://api.openweathermap.org/data/2.5/forecast?q=";
         var fiveURL = fiveFront + city + APIKey;
         console.log(fiveURL);
-
+        $(".forecast").empty();
     
         $.ajax({
             url: fiveURL,
