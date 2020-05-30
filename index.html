@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Patua+One&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -14,44 +19,50 @@
     <div class = "container">
         <div class = "row">
             <div class = "col-md-4">
+                <div class='card search-section'>
+                    <div class='card-body'>
+                      <label>Search For a City:</label>
+                    <form id="city-form">
+						<input type="text" id="city-input" />
+						<button type="button" id="add-city" class="btn btn-primary">
+							<i class="fas fa-search"></i>
+						</button>
+					</form>
+                        <div id="buttons-view" class="card" > 
+                            <ul class = "list-group list-group-flush">  </ul>
+                        </div>
+                    </div>
+                  </div>
 
             </div>
-            <div class = "col-md-8">
-
-
-            </div>
-        </div>
-        <div class = "row">
+            <div class = "col-md-8"> 
+        
+    
             <div class = "card">
                 <div class = "card-body">
-                    <div class = "card-title" id = "cityName">City</div>
-                    <p class="card-text" id="temperature">Temperature</p>
-                    <p class="card-text" id="humidity">humidity</p>
-                    <p class="card-text" id="windSpeed">Wind Speed</p>
-                    <p class="card-text" id="UVIndex">UV Index</p>
+                    <div class = "card-title" id = "city">City: </div>
+                    <p class="card-text" id="temp">Temperature: </p>
+                    <p class="card-text" id="humidity">Humidity: </p>
+                    <p class="card-text" id="windSpeed">Wind Speed: </p>
+                    <p class="card-text" id="UVIndex">UV Index: </p>
                 </div>
             </div>
-        </div>
-        <div class ="row">
+        
+        <div class ="row justify-content-between">
             <h3>5-Day Forecast</h3>
         </div>
-        <div class = "row">
-            <div id= "forecast">
-                
-            </div>
+        <div class = "row forecast">
+
         </div>
-
-
-
-
-
-
-
     </div>
-    
+    </div>
+    </div>
+    </div>
 
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-
-
+<script src="script.js"></script>   
 </body>
 </html>
