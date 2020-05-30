@@ -21,7 +21,7 @@ function citySearchPopulate(city){
 	$("#temp").empty();
 	$("#humidity").empty();
 	$("#windSpeed").empty();
-	// $(".uvIndex").empty();
+	$("#uvIndex").empty();
     $.ajax({
       url: citySearch ,
       method: "GET"
@@ -43,17 +43,68 @@ function citySearchPopulate(city){
 		console.log(K);
 		var F = ((K - 273.15) * 1.8 + 32).toFixed(0);
 		console.log(F);
-        $("#temp").append(F + " °F");
+        $("#temp").append("Temperature: "+F + " °F");
         
         // Humidity 
         var humidity = response.main.humidity;
-        $("#humidity").append(humidity + "%");
+        $("#humidity").append("Humiditity: "+humidity + "%");
         
         // Windspeed
         var windSpeed = response.wind.speed
-        $("#windSpeed").append(windSpeed + "%");      
+        $("#windSpeed").append("Wind speed: "+windSpeed + "MPH"); 
+
+
+        var lon = response.coord.lon;
+		var lat = response.coord.lat;
+
+		uvIndex(lon, lat);     
     });
 }
+
+
+function uvIndex(lon, lat) {
+	var indexURL =
+		"https://api.openweathermap.org/data/2.5/uvi?appid=2eec2dbdcaba6e2f1c110b67cde1c0d3&lat=";
+	var middle = "&lon=";
+	var indexSearch = indexURL + lat + middle + lon;
+	console.log(indexSearch);
+
+	$.ajax({
+		url: indexSearch,
+		method: "GET"
+	}).then(function(response) {
+		var uvFinal = response.value;
+
+        
+
+        // $("#uvIndex").append("UV Index: ");
+        var uvSpan = $("<span>")
+
+        if(uvFinal <3){
+        uvSpan.attr("style","background-color: green")
+        }
+        else if(uvFinal <3){
+        uvSpan.attr("style","background-color: green")
+        }
+        else if(uvFinal <6){
+        uvSpan.attr("style","background-color: yellow")
+        }
+        else if(uvFinal <8){
+        uvSpan.attr("style","background-color: orange")
+        }
+        else if(uvFinal <11){
+        uvSpan.attr("style","background-color: red")
+        }
+        else {
+        uvSpan.attr("style","background-color: purple")
+        }
+        uvSpan.text(uvFinal);
+		$("#uvIndex").append(uvSpan);
+		
+	});
+}
+
+
 
 function renderButtons() {
 	$(".list-group").empty();
@@ -80,9 +131,11 @@ function renderButtons() {
 }
 
 
+
+
     // Create Five Day Forecast
 function fiveDay(city) {
-        // var fiveFront = "https://api.openweathermap.org/data/2.5/forecast/daily?q=";
+    
         var fiveFront = "https://api.openweathermap.org/data/2.5/forecast?q=";
         var fiveURL = fiveFront + city + APIKey;
         console.log(fiveURL);
@@ -98,7 +151,7 @@ function fiveDay(city) {
     for (i = 0;i<5;i++){
         // Date Forecast Variable
         var dateVar = moment
-			.unix(response.list[(i)*8+7].dt)
+			.unix(response.list[(i)*8+6].dt)
 			.utc()
             .format("L");
         
@@ -106,17 +159,17 @@ function fiveDay(city) {
         var iconVar = $("<img>");
             var iconVarSrc =
                 "https://openweathermap.org/img/wn/" +
-                response.list[(i)*8+7].weather[0].icon +
+                response.list[(i)*8+6].weather[0].icon +
                 "@2x.png";
             // console.log("card Icon line 280" + iconOneSrc);
             iconVar.attr("src", iconVarSrc);
 
         // Temperature Forecast Variable
         var tempVar = ((tempforecast - 273.15) * 1.8 + 32).toFixed(0);
-        var tempforecast = response.list[(i)*8+7].main.temp
+        var tempforecast = response.list[(i)*8+6].main.temp
 
         // Humidity forecast Variable
-        var humidVar = response.list[(i)*8+7].main.humidity
+        var humidVar = response.list[(i)*8+6].main.humidity
 
         // var rowEl = $("<div>");
         // rowEl.addClass("col-md-2");
@@ -132,10 +185,10 @@ function fiveDay(city) {
         iconEl.append(iconVar);
         var tempEl = $("<p>");
         tempEl.addClass("card-text");
-        tempEl.text(tempVar + "°F");
+        tempEl.text("Temp: "+tempVar + "°F");
         var humidEl = $("<p>");
         humidEl.addClass("card-text");
-        humidEl.text(humidVar);
+        humidEl.text("Humid: "+humidVar);
         $(".forecast").append(cardEl);
         // rowEl.append(cardEl);
         cardEl.append(cardBody);
@@ -146,13 +199,7 @@ function fiveDay(city) {
     }     
 })
 }
- 
-
      
-
-
-
-    
 $("#add-city").on("click", function(event) {
 	event.preventDefault();
 
