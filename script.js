@@ -64,7 +64,7 @@ function citySearchPopulate(city){
 
 function uvIndex(lon, lat) {
 	var indexURL =
-		"https://api.openweathermap.org/data/2.5/uvi?appid=2eec2dbdcaba6e2f1c110b67cde1c0d3&lat=";
+		"https://api.openweathermap.org/data/2.5/uvi?appid=9864b119426b4f88ade384d94f6c43d3&lat=";
 	var middle = "&lon=";
 	var indexSearch = indexURL + lat + middle + lon;
 	console.log(indexSearch);
@@ -165,8 +165,10 @@ function fiveDay(city) {
             iconVar.attr("src", iconVarSrc);
 
         // Temperature Forecast Variable
-        var tempVar = ((tempforecast - 273.15) * 1.8 + 32).toFixed(0);
         var tempforecast = response.list[(i)*8+6].main.temp
+        var tempVar = ((tempforecast - 273.15) * 1.8 + 32).toFixed(0);
+        
+      
 
         // Humidity forecast Variable
         var humidVar = response.list[(i)*8+6].main.humidity
